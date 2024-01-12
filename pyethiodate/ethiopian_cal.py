@@ -283,6 +283,23 @@ class EthDate:
         # self.month = date_now.year
         # self.day = date_now.year
 
+    def __lt__(self, __value):
+        return (
+            self.year < __value.year
+            or self.month < __value.month
+            or self.day < __value.day
+        )
+
+    def __lte__(self, __value):
+        pass
+
+    def __eq__(self, __value: object) -> bool:
+        return (
+            __value.year == self.year
+            and __value.month == self.month
+            and __value.day == self.day
+        )
+
     @staticmethod
     def _start_day_of_ethiopian(year):
         """returns first day of that Ethiopian year
