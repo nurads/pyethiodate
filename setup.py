@@ -19,7 +19,7 @@ setuptools.setup(
         "six>=1.11.0",
     ],
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 1 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: GNU Library or "
         "Lesser General Public License (LGPL)",
