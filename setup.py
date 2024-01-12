@@ -14,6 +14,8 @@ setuptools.setup(
     description="Ethiopian date converter.",
     long_description=open("README.md").read(),
     url="http://github.com/nuradic/pythopia",
+    author="Murad",
+    author_email="nuradhussen082@gmail.com",
     packages=["pythopia"],
     install_requires=[
         "six>=1.11.0",
