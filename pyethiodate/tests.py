@@ -7,7 +7,7 @@ from __future__ import unicode_literals
 import unittest
 import datetime
 
-from pythopia import EthDate
+from pyethiodate import EthDate
 
 
 class TestEthiopianCalendar(unittest.TestCase):
