@@ -10,11 +10,11 @@ setuptools.setup(
     name="pythopia",
     version="1.0.0",
     license="GNU General Public License (GPL), Version 3",
-    provides=["ethiopian_date"],
+    provides=["pythopia"],
     description="Ethiopian date converter.",
     long_description=open("README.md").read(),
     url="http://github.com/nuradic/pythopia",
-    packages=["ethiopian_date"],
+    packages=["pythopia"],
     install_requires=[
         "six>=1.11.0",
     ],
