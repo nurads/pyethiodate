@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # encoding=utf-8
-# maintainer: rgaudin
+# maintainer: nuradic
 
 from __future__ import absolute_import
 from __future__ import unicode_literals
