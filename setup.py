@@ -8,7 +8,7 @@ import setuptools
 
 setuptools.setup(
     name="pythopia",
-    version="0.0.1",
+    version="1.0.0",
     license="GNU General Public License (GPL), Version 3",
     provides=["ethiopian_date"],
     description="Ethiopian date converter.",
