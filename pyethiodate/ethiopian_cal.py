@@ -7,7 +7,7 @@ from __future__ import division
 from __future__ import unicode_literals
 import datetime
 from six.moves import range
-from .exceptions import *
+from exceptions import *
 
 
 class EthDate:
