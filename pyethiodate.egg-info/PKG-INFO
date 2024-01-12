@@ -13,12 +13,18 @@ Classifier: License :: OSI Approved :: GNU Library or Lesser General Public Lice
 Classifier: Programming Language :: Python
 Provides: pythopia
 
-# pyethiodate
+It is a Fork for Ethiopian Date Converter
+========================
 
-## Installation
+Introduction
+------------
 
-```
-pip install git+https://github.com/nuradic/pythopia.git@main#egg=pythopia
-```
+pyethiodate is a date converter from Ethiopian calendar to Gregorian
+calendar and vice-versa.
+It is a fork from ethiopian_date package to insure better maintainance
+Installation
+------------
+
+    pip install pyethiodate
 
 
