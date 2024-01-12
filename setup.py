@@ -12,7 +12,7 @@ setuptools.setup(
     license="GNU General Public License (GPL), Version 3",
     provides=["ethiopian_date"],
     description="Ethiopian date converter.",
-    long_description=open("README.rst").read(),
+    long_description=open("README.md").read(),
     url="http://github.com/nuradic/pythopia",
     packages=["ethiopian_date"],
     install_requires=[
