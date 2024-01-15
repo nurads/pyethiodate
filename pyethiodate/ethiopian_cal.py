@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 import datetime
 from datetime import timedelta
 from six.moves import range
-from exceptions import *
+from .exceptions import *
 
 
 class EthDate:
@@ -434,15 +434,3 @@ class EthDate:
             adate.second,
             adate.microsecond,
         )
-
-
-n = EthDate()
-
-# print(n.hour)
-n2 = n + datetime.timedelta(days=30 * 12)
-# # n < n2
-print(n)
-print(n2)
-
-# diff = timedelta(days=2, hours=2 * 1)
-# print(diff.days, diff.seconds)
