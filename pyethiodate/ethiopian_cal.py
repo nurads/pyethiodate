@@ -6,6 +6,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import unicode_literals
 import datetime
+from datetime import timedelta
 from six.moves import range
 from exceptions import *
 
@@ -37,40 +38,134 @@ class EthDate:
     ):
         return 1
 
+    def __repr__(self) -> str:
+        return self.__str__()
+
     def __str__(self) -> str:
-        return "{}-{:02d}-{:02d}".format(self.year, self.month, self.day)
+        return "{}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}.{}".format(
+            self.year,
+            self.month,
+            self.day,
+            self.hour,
+            self.minute,
+            self.second,
+            self.microsecond,
+        )
 
     def __init__(
         self,
-        year=None,
-        month=None,
-        day=None,
-        date=datetime.datetime.now(),
+        year: int = None,
+        month: int = None,
+        day: int = None,
+        hour: int = None,
+        minute: int = None,
+        second: int = None,
+        microsecond: int = None,
+        date: datetime.datetime = None,
     ) -> None:
-        if year:
-            if year > datetime.MAXYEAR or year < datetime.MINYEAR:
-                raise InvalidYearException()
-            self.year = year
+        if date:
+            date = EthDate.date_to_ethiopian(date)
+            self.year = date.year
+            self.month = date.month
+            self.day = date.day
+            self.hour = date.hour
+            self.minute = date.minute
+            self.second = date.second
+            self.microsecond = date.microsecond
+            return
+        date = datetime.datetime.now()
+        date = EthDate.to_ethiopian(
+            date.year,
+            date.month,
+            date.day,
+            date.hour,
+            date.minute,
+            date.second,
+            date.microsecond,
+        )
+        if not year:
+            year = date["year"]
+        if not month:
+            month = date["month"]
+        if not day:
+            day = date["day"]
+        if not hour:
+            hour = date["hour"]
+        if not minute:
+            minute = date["minute"]
+        if not second:
+            second = date["second"]
+        if not microsecond:
+            microsecond = date["microsecond"]
+        if year > datetime.MAXYEAR or year < datetime.MINYEAR:
+            raise InvalidYearException()
+        self.year = year
+        if month < 1 or month > 12:
+            raise InValidMonthOfTheYearException()
+        self.month = month
 
-            self.month = 1
-            self.day = 1
-            if month:
-                if month < 1 or month > 12:
-                    raise InValidMonthOfTheYearException()
-                self.month = month
+        if day < 1 or day > 30:
+            raise InValidDayOfTheMonthException()
+        if day > 6 and month == 13:
+            raise InValidDayOfTheMonthException()
+        self.day = day
+        if hour < 0 or hour > 23:
+            raise InvalidEthiopianDateAttribute(
+                message="Invalid hour : valid only 0...23"
+            )
+        self.hour = hour
 
-            if day:
-                if day < 1 or day > 30:
-                    raise InValidDayOfTheMonthException()
-                if day > 6 and month == 13:
-                    raise InValidDayOfTheMonthException()
-                self.day = day
+        if minute < 0 or minute > 59:
+            raise InvalidEthiopianDateAttribute(
+                message="Invalid minute : valid only 0...59"
+            )
+        self.minute = minute
+        if day < 0 or day > 59:
+            raise InvalidEthiopianDateAttribute(
+                message="Invalid second : valid only 0...59"
+            )
+        self.second = second
 
-        elif date:
-            d = EthDate.date_to_ethiopian(date)
-            self.year = d.year
-            self.month = d.month
-            self.day = d.day
+        if microsecond < 0 or microsecond > 999999:
+            raise InvalidEthiopianDateAttribute(
+                message="Invalid microsecond : valid only 0...999999"
+            )
+        self.microsecond = microsecond
+
+    # Define EthDate Operators
+    def __le__(self, __value):
+        pass
+
+    def __sub__(self, __value: timedelta):
+        date = EthDate.date_to_ethiopian(EthDate.date_to_gregorian(self) - __value)
+        return date
+
+    def __add__(self, __value: timedelta):
+        date = EthDate.date_to_ethiopian(EthDate.date_to_gregorian(self) + __value)
+        return date
+        total_sec = __value.total_seconds()
+        days, left_sec = total_sec // (24 * 60 * 60), total_sec % (24 * 60 * 60)
+        hours, left_sec = left_sec // (60 * 60), left_sec % (60 * 60)
+        minutes, left_sec = left_sec // 60, left_sec % 60
+        seconds = int(left_sec)
+
+        total_day = self.day + days
+        day, add_month = total_day % 30, total_day // 30
+
+        # Handle month 13 5 or 6 days
+        total_month = self.month + add_month
+        month, add_year = total_month % 12, total_month // 12
+
+        total_year = self.year + add_year
+        return EthDate(
+            year=int(total_year),
+            month=int(month),
+            day=int(day),
+            hour=int(hours),
+            minute=int(minutes),
+            second=int(seconds),
+            microsecond=__value.microseconds,
+        )
 
     def __lt__(self, __value):
         return (
@@ -113,11 +208,26 @@ class EthDate:
 
         Params:
         * adate: date object"""
-
-        return EthDate.to_ethiopian(date.year, date.month, date.day)
+        return EthDate.to_ethiopian_date(
+            date.year,
+            date.month,
+            date.day,
+            date.hour,
+            date.minute,
+            date.second,
+            date.microsecond,
+        )
 
     @staticmethod
-    def to_ethiopian(year, month, date):
+    def to_ethiopian(
+        year,
+        month,
+        date,
+        hour=0,
+        minute=0,
+        second=0,
+        microsecond=0,
+    ):
         """Ethiopian date string representation of provided Gregorian date
 
         Params:
@@ -203,10 +313,40 @@ class EthDate:
         order = [0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4]
         ethiopian_month = order[m]
 
-        return EthDate(ethiopian_year, ethiopian_month, ethiopian_date)
+        return {
+            "year": ethiopian_year,
+            "month": ethiopian_month,
+            "day": ethiopian_date,
+            "hour": hour,
+            "minute": minute,
+            "second": second,
+            "microsecond": microsecond,
+        }
 
     @staticmethod
-    def to_gregorian(year, month, date):
+    def to_ethiopian_date(
+        year,
+        month,
+        date,
+        hour=0,
+        minute=0,
+        second=0,
+        microsecond=0,
+    ):
+        kwargs = EthDate.to_ethiopian(
+            year,
+            month,
+            date,
+            hour,
+            minute,
+            second,
+            microsecond,
+        )
+
+        return EthDate(**kwargs)
+
+    @staticmethod
+    def to_gregorian(year, month, date, hour=0, minute=0, second=0, microsecond=0):
         """Gregorian date object representation of provided Ethiopian date
 
         Params:
@@ -266,7 +406,15 @@ class EthDate:
         order = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9]
         gregorian_month = order[m]
 
-        return datetime.date(gregorian_year, gregorian_month, gregorian_date)
+        return datetime.datetime(
+            gregorian_year,
+            gregorian_month,
+            gregorian_date,
+            hour,
+            minute,
+            second,
+            microsecond,
+        )
 
     @staticmethod
     def date_to_gregorian(adate):
@@ -277,4 +425,24 @@ class EthDate:
         Params:
         * adate: date object"""
 
-        return EthDate.to_gregorian(adate.year, adate.month, adate.day)
+        return EthDate.to_gregorian(
+            adate.year,
+            adate.month,
+            adate.day,
+            adate.hour,
+            adate.minute,
+            adate.second,
+            adate.microsecond,
+        )
+
+
+n = EthDate()
+
+# print(n.hour)
+n2 = n + datetime.timedelta(days=30 * 12)
+# # n < n2
+print(n)
+print(n2)
+
+# diff = timedelta(days=2, hours=2 * 1)
+# print(diff.days, diff.seconds)

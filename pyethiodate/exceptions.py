@@ -3,6 +3,14 @@ class InvalidYearException(Exception):
         self.message
 
 
+class InvalidEthiopianDateAttribute(Exception):
+    def __init__(
+        self, message="Invalid Attribute for Ethiopian Date", *args: object
+    ) -> None:
+        self.message = message
+        super().__init__(*args)
+
+
 class InValidDayOfTheMonthException:
     def __init__(
         self, message="Invalid day of the month ethiopian date range 1...30"
