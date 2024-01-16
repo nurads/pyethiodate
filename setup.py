@@ -16,7 +16,7 @@ Installation
 """
 setuptools.setup(
     name="pyethiodate",
-    version="1.0.2",
+    version="1.0.3",
     license="GNU General Public License (GPL), Version 3",
     provides=["pythopia"],
     description="Ethiopian date converter.",

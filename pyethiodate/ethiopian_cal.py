@@ -98,16 +98,24 @@ class EthDate:
         if not microsecond:
             microsecond = date["microsecond"]
         if year > datetime.MAXYEAR or year < datetime.MINYEAR:
-            raise InvalidYearException()
+            raise InvalidEthiopianDateAttribute(
+                message="Invalid year input only: 1...9999 allowed"
+            )
         self.year = year
-        if month < 1 or month > 12:
-            raise InValidMonthOfTheYearException()
+        if day > 6 and month == 13:
+            raise InvalidEthiopianDateAttribute(
+                message="Invalid day of the month for 13th month allowed only 0...6"
+            )
+        if month < 1 or month > 13:
+            raise InvalidEthiopianDateAttribute(
+                message="Invalid month input allowed only: 1...12"
+            )
         self.month = month
 
-        if day < 1 or day > 30:
-            raise InValidDayOfTheMonthException()
-        if day > 6 and month == 13:
-            raise InValidDayOfTheMonthException()
+        if day < 0 or day > 29:
+            raise InvalidEthiopianDateAttribute(
+                message="Invalid day allowed only 0...29"
+            )
         self.day = day
         if hour < 0 or hour > 23:
             raise InvalidEthiopianDateAttribute(
