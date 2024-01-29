@@ -112,7 +112,7 @@ class EthDate:
             )
         self.month = month
 
-        if day < 0 or day > 29:
+        if day < 1 or day > 30:
             raise InvalidEthiopianDateAttribute(
                 message="Invalid day allowed only 0...29"
             )
@@ -442,3 +442,12 @@ class EthDate:
             adate.second,
             adate.microsecond,
         )
+ett=EthDate(**{'day': 30,
+ 'hour': 13,
+ 'microsecond': 480683,
+ 'minute': 53,
+ 'month': 5,
+ 'second': 58,
+ 'year': 2016})
+
+print(ett)

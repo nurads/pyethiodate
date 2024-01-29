@@ -12,22 +12,22 @@ from ethiopian_cal import EthDate
 
 class TestEthiopianCalendar(unittest.TestCase):
     def test_gregorian_to_ethiopian(self):
-        conv = EthDate.to_ethiopian
+        conv = EthDate.to_ethiopian_date
         self.assertEqual(conv(1982, 11, 21), EthDate(1975, 3, 12))
         self.assertEqual(conv(1941, 12, 7), EthDate(1934, 3, 28))
         self.assertEqual(conv(2010, 12, 22), EthDate(2003, 4, 13))
 
     def test_date_gregorian_to_ethiopian(self):
         self.assertEqual(
-            EthDate.date_to_ethiopian(datetime.date(1982, 11, 21)),
+            EthDate.date_to_ethiopian(datetime.datetime(1982, 11, 21)),
             EthDate(1975, 3, 12),
         )
         self.assertEqual(
-            EthDate.date_to_ethiopian(datetime.date(1941, 12, 7)),
+            EthDate.date_to_ethiopian(datetime.datetime(1941, 12, 7)),
             EthDate(1934, 3, 28),
         )
         self.assertEqual(
-            EthDate.date_to_ethiopian(datetime.date(2010, 12, 22)),
+            EthDate.date_to_ethiopian(datetime.datetime(2010, 12, 22)),
             EthDate(2003, 4, 13),
         )
 
@@ -38,11 +38,11 @@ class TestEthiopianCalendar(unittest.TestCase):
 
     def test_date_ethiopian_to_gregorian(self):
         self.assertEqual(
-            EthDate.date_to_gregorian(datetime.date(2003, 4, 11)),
-            datetime.date(2010, 12, 20),
+            EthDate.date_to_gregorian(EthDate(2003, 4, 11)),
+            datetime.datetime(2010, 12, 20),
         )
         self.assertEqual(
-            EthDate.date_to_gregorian(datetime.date(1975, 3, 12)),
+            EthDate.date_to_gregorian(datetime.datetime(1975, 3, 12)),
             datetime.date(1982, 11, 21),
         )
 
