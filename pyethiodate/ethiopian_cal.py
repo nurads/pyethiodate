@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 import datetime
 from datetime import timedelta
 from six.moves import range
-from exceptions import *
+from .exceptions import *
 
 
 class EthDate:
@@ -442,12 +442,3 @@ class EthDate:
             adate.second,
             adate.microsecond,
         )
-ett=EthDate(**{'day': 31,
- 'hour': 13,
- 'microsecond': 480683,
- 'minute': 53,
- 'month': 5,
- 'second': 58,
- 'year': 2016})
-
-print(ett)
