@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 import datetime
 from datetime import timedelta
 from six.moves import range
-from .exceptions import *
+from exceptions import *
 
 
 class EthDate:
@@ -114,7 +114,7 @@ class EthDate:
 
         if day < 1 or day > 30:
             raise InvalidEthiopianDateAttribute(
-                message="Invalid day allowed only 0...29"
+                message="Invalid day allowed only 1...30"
             )
         self.day = day
         if hour < 0 or hour > 23:
@@ -442,7 +442,7 @@ class EthDate:
             adate.second,
             adate.microsecond,
         )
-ett=EthDate(**{'day': 30,
+ett=EthDate(**{'day': 31,
  'hour': 13,
  'microsecond': 480683,
  'minute': 53,
