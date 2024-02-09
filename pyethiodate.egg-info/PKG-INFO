@@ -1,0 +1,24 @@
+Metadata-Version: 2.1
+Name: pyethiodate
+Version: 1.0.5
+Summary: Ethiopian date converter.
+Home-page: http://github.com/nuradic/pyethiodate
+Author: Murad
+Author-email: nuradhussen082@gmail.com
+License: GNU General Public License (GPL), Version 3
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)
+Classifier: Programming Language :: Python
+Provides: pythopia
+
+
+calendar and vice-versa.
+It is a fork from ethiopian_date package to insure better maintainance
+Installation
+------------
+
+    pip install pyethiodate
+
+

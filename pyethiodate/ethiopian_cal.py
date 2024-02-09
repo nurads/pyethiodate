@@ -36,7 +36,7 @@ class EthDate:
     def weekDay(
         self,
     ):
-        return 1
+        return EthDate.date_to_gregorian(self).weekday()
 
     def __repr__(self) -> str:
         return self.__str__()
@@ -55,12 +55,12 @@ class EthDate:
     def __init__(
         self,
         year: int = None,
-        month: int = None,
-        day: int = None,
-        hour: int = None,
-        minute: int = None,
-        second: int = None,
-        microsecond: int = None,
+        month: int = 1,
+        day: int = 1,
+        hour: int = 0,
+        minute: int = 0,
+        second: int = 0,
+        microsecond: 0 = 0,
         date: datetime.datetime = None,
     ) -> None:
         if date:
@@ -85,18 +85,9 @@ class EthDate:
         )
         if not year:
             year = date["year"]
-        if not month:
             month = date["month"]
-        if not day:
             day = date["day"]
-        if not hour:
-            hour = date["hour"]
-        if not minute:
-            minute = date["minute"]
-        if not second:
-            second = date["second"]
-        if not microsecond:
-            microsecond = date["microsecond"]
+
         if year > datetime.MAXYEAR or year < datetime.MINYEAR:
             raise InvalidEthiopianDateAttribute(
                 message="Invalid year input only: 1...9999 allowed"
